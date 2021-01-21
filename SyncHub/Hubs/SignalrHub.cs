@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Agy.Server.Hubs
 {
-     [Authorize]        
-    // [Authorize("Bearer")]
+    // [Authorize]      
+    // [Authorize("Bearer")] // exception policyn 'Bearer' not found
     // [Authorize(AuthenticationSchemes = "Bearer")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [Authorize("SigScope")]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // 401
+    [Authorize("SigScope")]
     public class SignalrHub : Hub<ISignalrHub>
     {
         public SignalrHub()

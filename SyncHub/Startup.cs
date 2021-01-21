@@ -10,7 +10,7 @@ using System.Linq;
 using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;// nuget - IdentityServer4.AccessTokenValidation cant find Duende equivilent on nuget yet.
-
+using Microsoft.IdentityModel.Tokens;
 
 namespace SyncHub
 {
@@ -22,6 +22,11 @@ namespace SyncHub
             .AddJwtBearer("Bearer", options =>
             {
                 options.Authority = "https://localhost:5001";
+              
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
 
                 options.Events = new JwtBearerEvents
                 {
@@ -67,11 +72,11 @@ namespace SyncHub
             // Check the token for scope
             services.AddAuthorization(options =>
             {
-                //options.AddPolicy("SigScope", policy =>
-                //{
-                //    policy.RequireAuthenticatedUser();
-                //    policy.RequireClaim("scope", "sig1");
-                //});
+                options.AddPolicy("SigScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "sig1");
+                });
 
                 #region old policies
                 //options.AddPolicy("MyAuthPolicy", policy => policy.RequireAssertion(httpCtx =>
@@ -91,9 +96,9 @@ namespace SyncHub
             services.AddCors(options =>
             {
                 // Duende Identity Server https://localhost:5001/
-                // Sync Hub server http://localhost:54787/
+                // Sync Hub server http://localhost:5050/
                 options.AddPolicy("AllowClients",
-                                  p => p.WithOrigins("https://localhost:5001/", "http://localhost:54787/")
+                                  p => p.WithOrigins("https://localhost:5001/", "http://localhost:5050/")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod()
                                         .AllowCredentials());
@@ -165,16 +170,7 @@ namespace SyncHub
             }
         }
 
-        //private void ListClaims(string Token)
-        //{
-        //    Debug.WriteLine("");
-        //    Debug.WriteLine($"Sync Hub.......");
-        //    Debug.WriteLine($"Token Claims: ");
-        //    foreach (var claim in Token.clams)
-        //    {
-        //        Debug.WriteLine($"{claim.Type} = {claim.Value}");
-        //    }
-        //}
+
 
         private string ShorterJWT(string token)
         {

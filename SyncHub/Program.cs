@@ -18,6 +18,13 @@ namespace SyncHub
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging =>
+                {
+                    //logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Information);
+                    logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Information);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

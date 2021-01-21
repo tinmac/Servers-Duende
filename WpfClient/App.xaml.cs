@@ -21,8 +21,8 @@ namespace WpfClient
         private void App_Startup(object sender, StartupEventArgs e)
         {
             // Set Hub Server IP
-            //App.BaseAddress = new Uri($"http://localhost:5050/");
-            App.BaseAddress = new Uri("http://localhost:54787/");
+            App.BaseAddress = new Uri($"http://localhost:5050/");
+            //App.BaseAddress = new Uri("http://localhost:54787/");
 
         }
     }

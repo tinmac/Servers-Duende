@@ -19,6 +19,8 @@ using System.Text.Encodings.Web;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace WpfClient
 {
@@ -142,11 +144,23 @@ namespace WpfClient
             try
             {
                 App.HubConn = new HubConnectionBuilder()
-               //.ConfigureLogging(SignalrClient.logr.Debug)
+               .ConfigureLogging(logging => {
+                   // Log to the Console
+                   //logging.AddConsole();
+
+                   // Log to the Output Window
+                   logging.AddDebug();
+
+                   // This will set ALL logging to Debug level
+                   logging.SetMinimumLevel(LogLevel.Debug);
+
+                   logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug); 
+               })
                .WithUrl(url, options =>
                {
-                   //options.SkipNegotiation = true;
-                   //options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                   options.SkipNegotiation = true;
+                   options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                   
                    options.AccessTokenProvider = () => Task.FromResult(token);
                    Debug.WriteLine($"Wpf Client.....");
                    Debug.WriteLine($"Connecting to SyncHub @ {App.BaseAddress}  - Token: {ShortenJWT(App.Token)}");
