@@ -1,0 +1,9 @@
+IdSvr = Identityserver4
+SyncHub = SignalR project that has the 'unauthorized' error
+WpfCLient = Authenticates via IdSver & receives Token, then calls SyncHub with said Token
+
+To run: IdSvr & SyncHub are set to run as multiple projects
+        WpfClient - run manually once servers are running via: WpfClient Project --> right click --> Debug --> Start New Instance
+
+
+
