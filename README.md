@@ -15,9 +15,13 @@ This solution has three main projects, A fourth simple Api was project added to 
 Set the projects to run as multiple projects, in this order:
 
 First) IdSvr
+
 Next) Sync Hub
+
 Next) WpfClient
+
 Last) Api
+
 
 Wpf client has three buttons:
 
