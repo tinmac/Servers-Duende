@@ -12,7 +12,7 @@ This solution has three main projects, A fourth simple Api was project added to 
 
 ## To run 
 
-Set the projects to run as multiple projects, in this order:
+Set the projects to run as Multiple Startup Projects, in this order:
 
 First) IdSvr
 
