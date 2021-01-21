@@ -1,18 +1,23 @@
 # Projects
 This solution has three main projects, A fourth simple Api was project added to show that the [Authorise] attribute works for HTTP Api.  
 
-#### IdSvr = Identityserver4.
+1) IdSvr = Duende Identityserver.
 
-#### WpfClient Authenticates via IdSvr 'Code' flow & receives Token, then calls SyncHub with said Token.
+2) WpfClient Authenticates via IdSvr 'Code' flow & receives Token, then calls SyncHub with said Token.
 
-#### SyncHub SignalR project that wont [Authorize] - error 'Failed to invoke 'ContactHub' because user is unauthorized'.
+3) SyncHub SignalR project that wont [Authorize] - error '401 unauthorized'.
 
-#### Api = fourth simple Api project added to show successful [Authorise] via IS4.
+4) Api = fourth simple Api project added to show successful [Authorise] via Identity Server.
 
 
 ## To run 
 
-I personally set all projects run as multiple projects, with Wpf & Api last.
+Set the projects to run as multiple projects, in this order:
+
+First) IdSvr
+Next) Sync Hub
+Next) WpfClient
+Last) Api
 
 Wpf client has three buttons:
 
@@ -27,6 +32,6 @@ Wpf client has three buttons:
 
 The error in question is in SyncHub project:
 
-Failed to invoke 'ContactHub' because user is unauthorized.
+Failed to invoke 'ContactHub' because user is unauthorized 401.
 
 The SignalR 'ContactHub' method is in SyncHub --> SignalrHub.cs 
