@@ -1,4 +1,4 @@
-# Demo showing Identity Server working with a WPF client which calls a SignalR hub and an Api.
+### Demo showing Identity Server working with a WPF client which calls a SignalR hub and an Api using the IS4 (now Duende) Token.
 
 ## Projects
 1) IdSvr = Duende Identityserver.
@@ -36,7 +36,7 @@ Wpf client has three buttons:
 
 ```Exception Message: Response status code does not indicate success: 401 (Unauthorized).```
 This was fixed in Bearer event onMessageReceived by removing the code which plucked the token out of the Authorization Header & letting the Middleware do its thing.
-Also the Audience had either be assigned or disabled, it was disabled.
+Also the Audience had either be assigned or disabled, it was disabled in SyncHub Startup.cs.
 
 Stack Trace:
 
