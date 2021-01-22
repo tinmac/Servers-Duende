@@ -5,7 +5,7 @@
 
 2) WpfClient Authenticates via IdSvr 'Code' flow & receives Token, then calls SyncHub with said Token.
 
-3) SyncHub SignalR project that wont [Authorize] - error '401 unauthorized'.
+3) SyncHub SignalR project that wont [Authorize] - error '401 unauthorized'. This is now fixed see prolems encountered bleow.
 
 4) Api = fourth simple Api project added to show successful [Authorise] via Identity Server.
 
