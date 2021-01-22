@@ -1,4 +1,4 @@
-### Demo showing Identity Server working with a WPF client which calls a SignalR hub and an Api using the IS4 (now Duende) Token.
+### Fully working demo showing Identity Server working with a WPF client which calls a SignalR hub and an Api using the IS4 (now Duende) Token.
 
 ## Projects
 1) IdSvr = Duende Identityserver.
