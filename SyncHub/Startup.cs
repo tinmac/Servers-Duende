@@ -50,19 +50,25 @@ namespace SyncHub
                             }
                         }
 
-                        // Is token in Authorization Header?
-                        var headers = context.Request.Headers;
-                        var token = context.Request.Headers.FirstOrDefault(o => o.Key == "Authorization").Value.ToString();
-                        if (!string.IsNullOrWhiteSpace(token))
-                        {
-                            //token = token.Replace("Bearer ", "");
-                            accessToken = token;
-                            Debug.WriteLine($"Sync Hub.......");
-                            Debug.WriteLine($"Event... OnMessageReceived... Token fouund in Headers[Authorization] : {ShorterJWT(accessToken)}");
-                            Debug.WriteLine("");
+                        #region Dont add this!
 
-                            context.Token = accessToken;
-                        }
+                        // This caused 401 unauthorized error. Removing this and letting the middleware do its thing removed the error.
+                        //// Is token in Authorization Header?
+                        //var headers = context.Request.Headers;
+                        //var token = context.Request.Headers.FirstOrDefault(o => o.Key == "Authorization").Value.ToString();
+                        //if (!string.IsNullOrWhiteSpace(token))
+                        //{
+                        //    //token = token.Replace("Bearer ", "");
+                        //    accessToken = token;
+                        //    Debug.WriteLine($"Sync Hub.......");
+                        //    Debug.WriteLine($"Event... OnMessageReceived... Token fouund in Headers[Authorization] : {ShorterJWT(accessToken)}");
+                        //    Debug.WriteLine("");
+
+                        //    context.Token = accessToken;
+                        //}
+
+                        #endregion
+
                         return Task.CompletedTask;
                     }
                 };
@@ -72,11 +78,11 @@ namespace SyncHub
             // Check the token for scope
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("SigScope", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "sig1");
-                });
+                //options.AddPolicy("SigScope", policy =>
+                //{
+                //    policy.RequireAuthenticatedUser();
+                //    policy.RequireClaim("scope", "sig1");
+                //});
 
                 #region old policies
                 //options.AddPolicy("MyAuthPolicy", policy => policy.RequireAssertion(httpCtx =>
@@ -93,16 +99,16 @@ namespace SyncHub
             });
            
 
-            services.AddCors(options =>
-            {
-                // Duende Identity Server https://localhost:5001/
-                // Sync Hub server http://localhost:5050/
-                options.AddPolicy("AllowClients",
-                                  p => p.WithOrigins("https://localhost:5001/", "http://localhost:5050/")
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod()
-                                        .AllowCredentials());
-            });
+            //services.AddCors(options =>
+            //{
+            //    // Duende Identity Server https://localhost:5001/
+            //    // Sync Hub server http://localhost:5050/
+            //    options.AddPolicy("AllowClients", p =>
+            //                       p.WithOrigins("https://localhost:5001/", "http://localhost:5050/")
+            //                        .AllowAnyHeader()
+            //                        .AllowAnyMethod()
+            //                        .AllowCredentials());
+            //});
 
             services.AddControllersWithViews();
 
@@ -114,7 +120,11 @@ namespace SyncHub
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("AllowClients");
+            app.UseCors(p =>p
+                    .WithOrigins("https://localhost:5001/", "http://localhost:5050/")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
 
             if (env.IsDevelopment())
             {
@@ -160,8 +170,9 @@ namespace SyncHub
             public virtual string GetUserId(HubConnectionContext connection)
             {
                 var name = connection.User?.Identity?.Name;// always null, try email
+                var claims = connection.User?.Claims;//.FirstOrDefault(o => o.Type == "email").Value;
                 //var email = connection.User?.FindFirst(ClaimTypes.Email)?.Value;// null too!!! Why???
-
+                // TODO Get email or name
                 Debug.WriteLine($"Sync Hub.......");
                 Debug.WriteLine($"Name UserId Provider: {name}");
                 Debug.WriteLine("");

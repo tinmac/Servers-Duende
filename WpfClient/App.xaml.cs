@@ -15,14 +15,19 @@ namespace WpfClient
         // Props
         public static HubConnection HubConn { get; set; }
         public static Uri BaseAddress { get; set; }
+        public static string HubAddress { get; set; }
+
         public static string Token { get; set; }
 
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
             // Set Hub Server IP
-            App.BaseAddress = new Uri($"http://localhost:5050/");
-            //App.BaseAddress = new Uri("http://localhost:54787/");
+            string IP = "http://localhost:5050";
+            App.BaseAddress = new Uri(IP);
+            App.HubAddress = $"{IP}/sighub";
+
+            //App.BaseAddress = new Uri("http://localhost:54787");
 
         }
     }

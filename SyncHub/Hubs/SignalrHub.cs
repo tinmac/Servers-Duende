@@ -10,22 +10,26 @@ using System.Threading.Tasks;
 
 namespace Agy.Server.Hubs
 {
-    // [Authorize]      
-    // [Authorize("Bearer")] // exception policyn 'Bearer' not found
-    // [Authorize(AuthenticationSchemes = "Bearer")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // 401
-    [Authorize("SigScope")]
+    #region Secure endpoint
+    // These can be placed on the class or the Method.
+    // Only one doesnt work.
+    //
+    // [Authorize("Bearer")] // The AuthorizationPolicy named: 'Bearer' was not found.
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // Works
+    // [Authorize(AuthenticationSchemes = "Bearer")] // Works
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] // Works
+    // [Authorize("SigScope")] Works if SigScop enabled in startup
+    // [Authorize] // Works
+    #endregion
+
+    [Authorize]
     public class SignalrHub : Hub<ISignalrHub>
     {
         public SignalrHub()
         {
         }
 
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // [Authorize(AuthenticationSchemes = "Bearer")]
-        // [Authorize]        
-        // [Authorize("SigScope")]
-        // [Authorize("Bearer")]
+        // [Authorize]
         public async Task ContactHub(TestDto payload)
         {
             var sigBack = new TestDto();
@@ -47,7 +51,7 @@ namespace Agy.Server.Hubs
         }
 
 
-        
+
         public override async Task OnConnectedAsync()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");

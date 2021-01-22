@@ -31,6 +31,8 @@ namespace WpfClient
     {
         private OidcClient _oidcClient = null;
 
+        //private Uri HubAddress = new Uri("http://localhost:5050/sighub");
+
         public MainWindow()
         {
             InitializeComponent();
@@ -138,32 +140,40 @@ namespace WpfClient
 
         private async Task ConnectToHub()
         {
-            string url = $"{App.BaseAddress}sighub";
             var token = App.Token;
-
             try
             {
                 App.HubConn = new HubConnectionBuilder()
                .ConfigureLogging(logging => {
-                   // Log to the Console
-                   //logging.AddConsole();
+                   #region Enable Logging
 
-                   // Log to the Output Window
-                   logging.AddDebug();
+                   bool EnableLogging = false;
+                   if (EnableLogging)
+                   {
+                       // Log to the Output Window - Use this 
+                       logging.AddDebug();
 
-                   // This will set ALL logging to Debug level
-                   logging.SetMinimumLevel(LogLevel.Debug);
+                       // This will set ALL logging to Debug level
+                       logging.SetMinimumLevel(LogLevel.Debug);
 
-                   logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug); 
+                       logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
+
+                       // Log to the Console - DONT USE THIS you wont see anything. wpf isnt (usually) a console app.
+                       //logging.AddConsole();
+                   }
+                   #endregion
                })
-               .WithUrl(url, options =>
+               .WithUrl(App.HubAddress, options =>
                {
-                   options.SkipNegotiation = true;
-                   options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
-                   
+                   #region Notes
+                   // When we had the 'Negotiation Failed' error, adding these settings made no difference.
+                   //options.SkipNegotiation = true;
+                   //options.Transports = Microsoft.AspNetCore.Http.Connections.HttpTransportType.WebSockets;
+                   #endregion
+
                    options.AccessTokenProvider = () => Task.FromResult(token);
                    Debug.WriteLine($"Wpf Client.....");
-                   Debug.WriteLine($"Connecting to SyncHub @ {App.BaseAddress}  - Token: {ShortenJWT(App.Token)}");
+                   Debug.WriteLine($"Connecting to SyncHub @ {App.HubAddress}  - Token: {ShortenJWT(App.Token)}");
                    Debug.WriteLine("");
                })
                .Build();
