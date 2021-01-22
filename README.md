@@ -42,12 +42,12 @@ Also the Audience had to either be assigned or disabled, it was disabled in Sync
 
 Stack Trace:
 
- at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+ `at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
    at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.<NegotiateAsync>d__45.MoveNext()
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at System.Runtime.CompilerServices.TaskAwaiter1.GetResult()
    at Microsoft.AspNetCore.Http.Connections.Client.HttpConnection.<GetNegotiationResponseAsync>d__52.MoveNext()
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
@@ -73,8 +73,8 @@ Stack Trace:
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-   at System.Threading.Tasks.ValueTask`1.get_Result()
-   at System.Runtime.CompilerServices.ValueTaskAwaiter`1.GetResult()
+   at System.Threading.Tasks.ValueTask1.get_Result()
+   at System.Runtime.CompilerServices.ValueTaskAwaiter1.GetResult()
    at Microsoft.AspNetCore.SignalR.Client.HubConnection.<StartAsyncCore>d__58.MoveNext()
    at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
@@ -91,4 +91,6 @@ Stack Trace:
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.GetResult()
-   at WpfClient.MainWindow.<ConnectToHub>d__7.MoveNext() in C:\Users\mmcca\source\repos\Servers - Duende\WpfClient\MainWindow.xaml.cs:line 171
+   at WpfClient.MainWindow.<ConnectToHub>d__7.MoveNext() in C:\Users\mmcca\source\repos\Servers - Duende\WpfClient\MainWindow.xaml.cs:line 171`
+   
+   
