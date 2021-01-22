@@ -35,8 +35,10 @@ Wpf client has three buttons:
 ## The problems encountered along the way.
 
 ```Exception Message: Response status code does not indicate success: 401 (Unauthorized).```
-This was fixed in Bearer event onMessageReceived by removing the code which plucked the token out of the Authorization Header & letting the Middleware do its thing.
-Also the Audience had either be assigned or disabled, it was disabled in SyncHub Startup.cs.
+
+This was fixed in Bearer event onMessageReceived by removing the [code](https://github.com/tinmac/Servers-Duende/blob/bc8c77779fc9233e5688cb670a948cf6168ce444/SyncHub/Startup.cs#L55-L68) which plucked the token out of the Authorization Header & letting the Middleware do its thing.
+
+Also the Audience had either be assigned or disabled, it was disabled in SyncHub Startup.cs [here](https://github.com/tinmac/Servers-Duende/blob/bc8c77779fc9233e5688cb670a948cf6168ce444/SyncHub/Startup.cs#L26-L29).
 
 Stack Trace:
 
